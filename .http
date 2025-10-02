@@ -5,3 +5,7 @@
 ### The basic request
 
 GET {{baseUrl}}
+
+### The basic request
+
+GET {{baseUrl}}/tasks
