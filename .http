@@ -30,3 +30,12 @@ Content-Type: {{contentType}}
   "description": "",
   "status": "XXX"
 }
+
+# 130893db-0228-42a7-982c-dc9672c5d176
+### Update Task Status
+PATCH {{baseUrl}}/tasks/130893db-0228-42a7-982c-dc9672c5d176/status
+Content-Type: {{contentType}}
+
+{
+  "status": "OPEN"
+}
