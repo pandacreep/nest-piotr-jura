@@ -39,3 +39,8 @@ Content-Type: {{contentType}}
 {
   "status": "OPEN"
 }
+
+# 66ca8f27-f053-4d02-8a15-f0450e37597b
+### Deleting task
+DELETE {{baseUrl}}/tasks/66ca8f27-f053-4d02-8a15-f0450e37597b
+Content-Type: {{contentType}}
