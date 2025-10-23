@@ -18,8 +18,8 @@ export class TasksService {
   create(createTaskDto: CreateTaskDto): ITask {
     const task: ITask = {
       id: randomUUID(),
-      ...createTaskDto
-    }
+      ...createTaskDto,
+    };
     this.tasks.push(task);
     return task;
   }
