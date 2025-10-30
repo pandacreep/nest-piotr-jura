@@ -5,13 +5,14 @@
 ### The basic request
 GET {{baseUrl}}
 
-###
+### Get all tasks
 GET {{baseUrl}}/tasks
 
-###
-GET {{baseUrl}}/tasks/123
+### Get one task
+GET {{baseUrl}}/tasks/{{taskId}}
 
 ### Create new task
+# @name createTask
 POST {{baseUrl}}/tasks
 Content-Type: {{contentType}}
 
@@ -20,6 +21,9 @@ Content-Type: {{contentType}}
   "description": "Complete the NestJS course",
   "status": "OPEN"
 }
+
+### Set the task id
+@taskId = {{ createTask.response.body.id }} 
 
 ### Validation Error
 POST {{baseUrl}}/tasks
@@ -33,14 +37,14 @@ Content-Type: {{contentType}}
 
 # 130893db-0228-42a7-982c-dc9672c5d176
 ### Update Task Status
-PATCH {{baseUrl}}/tasks/130893db-0228-42a7-982c-dc9672c5d176/status
+PATCH {{baseUrl}}/tasks/{{taskId}}
 Content-Type: {{contentType}}
 
 {
-  "status": "OPEN"
+  "status": "IN_PROGRESS"
 }
 
 # 66ca8f27-f053-4d02-8a15-f0450e37597b
 ### Deleting task
-DELETE {{baseUrl}}/tasks/66ca8f27-f053-4d02-8a15-f0450e37597b
+DELETE {{baseUrl}}/tasks/{{taskId}}
 Content-Type: {{contentType}}
