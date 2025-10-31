@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { LoggerService } from './logger/logger.service';
+import { ConfigService } from '@nestjs/config';
+import { DummyService } from './dummy/dummy.service';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly loggerService: LoggerService) {}
+  constructor(
+    private readonly dummyService: DummyService,
+    private readonly loggerService: LoggerService,
+    private readonly configService: ConfigService,
+  ) {}
 
   getHello(): string {
-    return this.loggerService.log('Hello!');
+    const prefix = this.configService.get<string>('app.messagePrefix');
+    return this.loggerService.log(
+      `${prefix} Hello World! ${this.dummyService.work()}`,
+    );
   }
 }
