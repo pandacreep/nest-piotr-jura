@@ -7,11 +7,17 @@ import { TasksModule } from './tasks/tasks.module';
 import { ConfigModule } from '@nestjs/config';
 import { appConfig } from './config/app.config';
 import { DummyService } from './dummy/dummy.service';
+import { appConfigSchema } from './config/config.types';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       load: [appConfig],
+      validationSchema: appConfigSchema,
+      validationOptions: {
+        // allowUnknown: false,
+        abortEarly: true,
+      },
     }),
     TasksModule,
   ],
