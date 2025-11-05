@@ -7,18 +7,19 @@ import { TasksModule } from './tasks/tasks.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { appConfig } from './config/app.config';
 import { DummyService } from './dummy/dummy.service';
-import { appConfigSchema, ConfigType } from './config/config.types';
+import { appConfigSchema } from './config/config.types';
 import { typeOrmConfig } from './config/database.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypedConfigService } from './config/typed-config.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService<ConfigType>) => ({
+      useFactory: (configService: TypedConfigService) => ({
         ...configService.get('database'),
-      })
+      }),
     }),
     ConfigModule.forRoot({
       load: [appConfig, typeOrmConfig],
@@ -31,6 +32,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TasksModule,
   ],
   controllers: [AppController],
-  providers: [AppService, DummyService, MessageFormatterService, LoggerService],
+  providers: [
+    AppService,
+    DummyService,
+    MessageFormatterService,
+    LoggerService,
+    {
+      provide: TypedConfigService,
+      useExisting: ConfigService,
+    },
+  ],
 })
 export class AppModule {}
