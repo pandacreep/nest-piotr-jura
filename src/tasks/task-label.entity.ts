@@ -1,4 +1,13 @@
-import { Column, CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  Index,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Unique,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Task } from './task.entity';
 
 @Entity()
@@ -14,8 +23,10 @@ export class TaskLabel {
   @Column()
   @Index()
   taskId: string;
-  
-  @ManyToOne(() => Task, (task) => task.labels)
+
+  @ManyToOne(() => Task, (task) => task.labels, {
+    onDelete: 'CASCADE',
+  })
   task: Task;
 
   @CreateDateColumn()
