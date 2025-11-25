@@ -20,7 +20,12 @@ Content-Type: {{contentType}}
   "title": "Learn NestJS",
   "description": "Complete the NestJS course",
   "status": "OPEN",
-  "userId": "fbdc6ac2-4b64-4ee3-89f3-5e026627a2b8"
+  "userId": "fbdc6ac2-4b64-4ee3-89f3-5e026627a2b8",
+  "labels": [
+    {
+      "name": "urgent"
+    }
+  ]
 }
 
 ### Set the task id

@@ -23,7 +23,7 @@ export class Task {
   @ManyToOne(() => User, (user) => user.tasks, { nullable: false })
   user: User;
 
-  @OneToMany(() => TaskLabel, (label) => label.id, {
+  @OneToMany(() => TaskLabel, (label) => label.task, {
     cascade: true,
     orphanedRowAction: 'delete',
   })
