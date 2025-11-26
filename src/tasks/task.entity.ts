@@ -25,7 +25,7 @@ export class Task {
 
   @OneToMany(() => TaskLabel, (label) => label.task, {
     cascade: true,
-    orphanedRowAction: 'delete',
+    // orphanedRowAction: 'delete',
   })
   labels: TaskLabel[];
 }

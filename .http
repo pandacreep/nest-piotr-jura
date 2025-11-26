@@ -20,7 +20,7 @@ Content-Type: {{contentType}}
   "title": "Learn NestJS",
   "description": "Complete the NestJS course",
   "status": "OPEN",
-  "userId": "fbdc6ac2-4b64-4ee3-89f3-5e026627a2b8",
+  "userId": "4b7133e7-66f9-49c6-b8bd-5c22c214f886",
   "labels": [
     {
       "name": "urgent"
@@ -47,7 +47,10 @@ PATCH {{baseUrl}}/tasks/{{taskId}}
 Content-Type: {{contentType}}
 
 {
-  "status": "IN_PROGRESS"
+  "status": "IN_PROGRESS",
+  "labels": [{
+    "name": "done"
+  }] 
 }
 
 # 66ca8f27-f053-4d02-8a15-f0450e37597b
