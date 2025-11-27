@@ -6,12 +6,17 @@ import { CreateTaskDto } from './create-task.dto';
 import { UpdateTaskDto } from './update-task.dto';
 import { WrongTaskStatusException } from './exceptions/wrong-task-status.exception';
 import { Task } from './task.entity';
+import { CreateTaskLabelDto } from './create-task-label.dto';
+import { TaskLabel } from './task-label.entity';
 
 @Injectable()
 export class TasksService {
   constructor(
     @InjectRepository(Task)
     private readonly tasksRepository: Repository<Task>,
+
+    @InjectRepository(TaskLabel)
+    private readonly labelsRepository: Repository<TaskLabel>,
   ) {}
 
   async findAll(): Promise<Task[]> {
@@ -38,6 +43,17 @@ export class TasksService {
     }
     Object.assign(task, updateTaskDto);
     return await this.tasksRepository.save(task);
+  }
+
+  public async addlabels(
+    task: Task,
+    labelsDtos: CreateTaskLabelDto[],
+  ): Promise<Task> {
+    const labels = labelsDtos.map((label) =>
+      this.labelsRepository.create(label),
+    );
+    task.labels = [...task.labels, ...labels];
+    return this.tasksRepository.save(task);
   }
 
   private isValidStatusTransition(
