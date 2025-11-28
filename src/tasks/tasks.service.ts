@@ -31,6 +31,9 @@ export class TasksService {
   }
 
   async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+    if (createTaskDto.labels) {
+      createTaskDto.labels = this.getUniqueLabels(createTaskDto.labels);
+    }
     return await this.tasksRepository.save(createTaskDto);
   }
 
@@ -41,6 +44,11 @@ export class TasksService {
     ) {
       throw new WrongTaskStatusException();
     }
+
+    if (updateTaskDto.labels) {
+      updateTaskDto.labels = this.getUniqueLabels(updateTaskDto.labels);
+    }
+
     Object.assign(task, updateTaskDto);
     return await this.tasksRepository.save(task);
   }
@@ -56,6 +64,10 @@ export class TasksService {
     return this.tasksRepository.save(task);
   }
 
+  async deleteTask(task: Task): Promise<void> {
+    await this.tasksRepository.delete(task);
+  }
+
   private isValidStatusTransition(
     currentStatus: TaskStatus,
     newStatus: TaskStatus,
@@ -68,7 +80,10 @@ export class TasksService {
     return statusOrder.indexOf(currentStatus) < statusOrder.indexOf(newStatus);
   }
 
-  async deleteTask(task: Task): Promise<void> {
-    await this.tasksRepository.delete(task);
+  private getUniqueLabels(
+    labelDtos: CreateTaskLabelDto[],
+  ): CreateTaskLabelDto[] {
+    const uniqueNames = [...new Set(labelDtos.map((label) => label.name))];
+    return uniqueNames.map((name) => ({ name }));
   }
 }
