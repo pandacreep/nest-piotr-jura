@@ -57,11 +57,17 @@ export class TasksService {
     task: Task,
     labelsDtos: CreateTaskLabelDto[],
   ): Promise<Task> {
-    const labels = labelsDtos.map((label) =>
-      this.labelsRepository.create(label),
-    );
-    task.labels = [...task.labels, ...labels];
-    return this.tasksRepository.save(task);
+    const names = new Set(task.labels.map((label) => label.name));
+    const labels = this.getUniqueLabels(labelsDtos)
+      .filter((dto) => !names.has(dto.name))
+      .map((label) => this.labelsRepository.create(label));
+
+    if (labels.length) {
+      task.labels = [...task.labels, ...labels];
+      return this.tasksRepository.save(task);
+    }
+
+    return task;
   }
 
   async deleteTask(task: Task): Promise<void> {
