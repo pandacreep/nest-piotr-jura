@@ -71,7 +71,8 @@ export class TasksService {
   }
 
   async deleteTask(task: Task): Promise<void> {
-    await this.tasksRepository.delete(task);
+    // await this.tasksRepository.delete(task.id);
+    await this.tasksRepository.remove(task);
   }
 
   private isValidStatusTransition(
