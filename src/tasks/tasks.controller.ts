@@ -70,6 +70,16 @@ export class TasksController {
     return await this.tasksService.addlabels(task, labels);
   }
 
+  @Delete(':id/labels')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async removeLabels(
+    @Param() { id }: FindOneParams,
+    @Body() labelNames: string[],
+  ): Promise<void> {
+    const task = await this.findOneOrFail(id);
+    await this.tasksService.removeLabels(task, labelNames);
+  }
+
   private async findOneOrFail(id: string): Promise<Task> {
     const task = await this.tasksService.findOne(id);
 
