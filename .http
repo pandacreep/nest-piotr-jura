@@ -13,6 +13,11 @@ GET {{baseUrl}}/tasks?limit=2&offset=0
 # @name getAllInProgress
 GET {{baseUrl}}/tasks?status=IN_PROGRESS
 
+### Get all with search query
+# @name getAllWithSearch
+GET {{baseUrl}}/tasks?search=NestJS
+
+
 ### Get one task
 GET {{baseUrl}}/tasks/{{taskId}}
 
