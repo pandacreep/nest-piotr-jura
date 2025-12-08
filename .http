@@ -17,6 +17,9 @@ GET {{baseUrl}}/tasks?status=IN_PROGRESS
 # @name getAllWithSearch
 GET {{baseUrl}}/tasks?search=NestJS
 
+### Get all filtered by labels
+# @name getAllFilteredByLabels
+GET {{baseUrl}}/tasks?labels=urgent
 
 ### Get one task
 GET {{baseUrl}}/tasks/{{taskId}}

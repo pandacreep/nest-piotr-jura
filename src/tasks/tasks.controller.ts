@@ -33,7 +33,7 @@ export class TasksController {
     @Query() pagination: PaginationParams,
   ): Promise<PaginationResponse<Task>> {
     const [items, total] = await this.tasksService.findAll(filters, pagination);
-    
+
     return {
       data: items,
       meta: {
@@ -41,8 +41,8 @@ export class TasksController {
         ...pagination,
         // offset: pagination.offset,
         // limit: pagination.limit,
-      }
-    }
+      },
+    };
   }
 
   @Get('/:id')
