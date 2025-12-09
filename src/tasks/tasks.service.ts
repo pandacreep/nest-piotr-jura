@@ -10,6 +10,7 @@ import { CreateTaskLabelDto } from './create-task-label.dto';
 import { TaskLabel } from './task-label.entity';
 import { FindTaskParams } from './find-task.params';
 import { PaginationParams } from 'src/common/pagination.params';
+import { log } from 'console';
 
 @Injectable()
 export class TasksService {
@@ -41,11 +42,20 @@ export class TasksService {
     }
 
     if (filters.labels?.length) {
-      query.andWhere('labels.name IN (:...names)', { names: filters.labels });
+      const subQuery = query
+        .subQuery()
+        .select('labels.taskId')
+        .from('task_label', 'labels')
+        .where('labels.name IN (:...names)', { names: filters.labels })
+        .getQuery();
+
+      query.andWhere(`task.id IN ${subQuery}`);
+
+      // query.andWhere('labels.name IN (:...names)', { names: filters.labels });
     }
 
     query.skip(pagination.offset).take(pagination.limit);
-
+    console.log(query.getSql());
     return query.getManyAndCount();
 
     // const where: FindOptionsWhere<Task> = {};
