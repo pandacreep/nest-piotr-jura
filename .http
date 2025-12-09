@@ -21,6 +21,10 @@ GET {{baseUrl}}/tasks?search=NestJS
 # @name getAllFilteredByLabels
 GET {{baseUrl}}/tasks?labels=urgent,bug
 
+### Get all sorted
+# @name getAllSorted
+GET {{baseUrl}}/tasks?sortBy=createdAt&sortOrder=DESC
+
 ### Get one task
 GET {{baseUrl}}/tasks/{{taskId}}
 

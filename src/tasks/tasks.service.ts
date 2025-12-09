@@ -54,6 +54,8 @@ export class TasksService {
       // query.andWhere('labels.name IN (:...names)', { names: filters.labels });
     }
 
+    query.orderBy(`task.${filters.sortBy}`, filters.sortOrder);
+
     query.skip(pagination.offset).take(pagination.limit);
     console.log(query.getSql());
     return query.getManyAndCount();
